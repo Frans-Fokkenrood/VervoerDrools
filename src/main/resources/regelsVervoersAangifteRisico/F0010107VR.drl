@@ -1,0 +1,25 @@
+package com.fokkenrood.VervoersAangifteRisico
+
+import com.fokkenrood.drools.Aangifte;
+import com.fokkenrood.drools.Artikel;
+import com.fokkenrood.drools.Partij;
+import com.fokkenrood.drools.ContraInformatieLezer;
+import com.fokkenrood.drools.RISICO;
+
+global ContraInformatieLezer lezer;
+
+rule "F0010107VR"
+  when
+    $aangifte : Aangifte(
+      eventID == 13,
+      verzender.naam matches ".*(SHENZHEN JINMAIFU|WENZHOU JINDAZHOU INTERNATIONAL).*"
+      )
+  then
+    RISICO.maakScore(
+      "F0010107VR", 
+      RISICO.LAAG, 
+      "Verzender mogelijk betrokken bij...", 
+      "01-01-2016", 
+      "31-12-2020"
+      );
+end
