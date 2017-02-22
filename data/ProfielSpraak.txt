@@ -1,0 +1,105 @@
+Regel "VAR011" in "ArtikelVVARisico" luidt:
+
+Maak een score met de volgende parameters:
+	- score is LAAG											// parameter 2
+	- toelichting is "Bij aantreffen zending stoppen..."	// parameter 3
+	- begindatum is 01-01-2016								// parameter 4
+	- einddatum is 31-12-2020								// parameter 5
+
+indien aan de volgende voorwaarden wordt voldaan:
+	- de aangifte heeft rubriek event id is gelijk aan 13 en land van bestemming bevat "EG"
+	- het artikel heeft rubriek goederen code bevat "93020|93031|93032|93033|93039|93051|93052|93059|93062|93062"
+			 of goederen beschrijving bevat "WEAPON|BULLET|GRANATE|BOMB|SHOTSHEL|GUN|GUNS|PISTOL|PISTOLS"
+	.
+
+
+Testcase "VAR011_TC" in "ArtikelVVARisico" omvat de volgende testgevallen:
+
+	- "testcase_001" met als invoer:
+		een aangifte 
+			waarbij event id wordt gesteld op 13
+			waarbij land van bestemming wordt gesteld op "XXEGXX"
+		een artikel
+			waarbij goederen code wordt gesteld op "00009303300"
+			waarbij goederen beschrijving wordt gesteld op "ONE BULLET IN THE POCKET"
+		waardoor de regel zal vuren
+		
+	- "testcase_002" met als invoer:
+		een aangifte 
+			waarbij event id wordt gesteld op 13
+			waarbij land van bestemming wordt gesteld op "XXXXXX"
+		een artikel
+			waarbij goederen code wordt gesteld op "XXXXXX"
+			waarbij goederen beschrijving wordt gesteld op "XXXXXX"
+		waardoor de regel niet zal vuren
+	.
+
+
+Regel "VAR012" in "ArtikelVVARisico" luidt:
+
+Maak een score met de volgende parameters:
+	- score is LAAG
+	- toelichting is "Vanuit het BuZa en Douane Landelijk kantoor is..."
+
+indien aan de volgende voorwaarden wordt voldaan:
+	- de aangifte heeft rubriek event id is gelijk aan 13 en land van bestemming bevat "EG"
+	- het artikel heeft rubriek goederen code uit contrainformatie die bestaat
+			 of goederen beschrijving bevat "AMATOL|NITROCELLULOSE|NITROGLYCOL|PENTA-BLAH|ENZ"
+	.
+
+
+Testcase "VAR012_TC" in "ArtikelVVARisico" omvat de volgende testgevallen:
+
+	- "testcase_001" met als invoer:
+		een aangifte 
+			waarbij event id wordt gesteld op 13
+			waarbij land van bestemming wordt gesteld op "XXEGXX"
+		een artikel
+			waarbij goederen code wordt gesteld op "00009303300"
+			waarbij goederen beschrijving wordt gesteld op "ER ZIT NITROCELLULOSE IN"
+		waardoor de regel zal vuren
+		
+	- "testcase_002" met als invoer:
+		een aangifte 
+			waarbij event id wordt gesteld op 13
+			waarbij land van bestemming wordt gesteld op "XXXXXX"
+		een artikel
+			waarbij goederen code wordt gesteld op "XXXXXX"
+			waarbij goederen beschrijving wordt gesteld op "XXXXXX"
+		waardoor de regel niet zal vuren
+	.
+
+
+Regel "F0010107VR" in "VervoersAangifteRisico" luidt:
+
+Maak een score met de volgende parameters:
+	- score is LAAG												// parameter 2
+	- toelichting is "Verzender mogelijk betrokken bij..."		// parameter 3
+	- begindatum is 01-01-2016									// parameter 4
+	- einddatum is 31-12-2020									// parameter 5
+
+indien aan de volgende voorwaarden wordt voldaan:
+	- de aangifte heeft rubriek event id is gelijk aan 13
+		en verzender naam  bevat "SHENZHEN JINMAIFU|WENZHOU JINDAZHOU INTERNATIONAL"
+	.
+
+
+Testcase "F0010107VR_TC" in "VervoersAangifteRisico" omvat de volgende testgevallen:
+
+	- "testcase_001" met als invoer:
+		een partij zijnde verzender
+			waarbij naam wordt gesteld op "SHENZHEN JINMAIFU"
+		een aangifte 
+			waarbij event id wordt gesteld op 13
+			waarbij verzender wordt gesteld op verzender
+		waardoor de regel zal vuren
+		
+	- "testcase_002" met als invoer:
+		een partij zijnde verzender
+			waarbij naam wordt gesteld op "WENZHOU"
+		een aangifte 
+			waarbij event id wordt gesteld op 13
+			waarbij verzender wordt gesteld op verzender
+		waardoor de regel niet zal vuren
+	.
+
