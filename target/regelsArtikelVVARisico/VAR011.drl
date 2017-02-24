@@ -1,0 +1,29 @@
+package com.fokkenrood.ArtikelVVARisico
+
+import com.fokkenrood.drools.Aangifte;
+import com.fokkenrood.drools.Artikel;
+import com.fokkenrood.drools.Partij;
+import com.fokkenrood.drools.ContraInformatieLezer;
+import com.fokkenrood.drools.RISICO;
+
+global ContraInformatieLezer lezer;
+
+rule "VAR011"
+  when
+    $aangifte : Aangifte(
+      eventID == 13,
+      landVanBestemming matches ".*(EG).*"
+      )
+    $artikel : Artikel(
+      goederenCode matches ".*(93020|93031|93032|93033|93039|93051|93052|93059|93062|93062).*" ||
+      goederenBeschrijving matches ".*(WEAPON|BULLET|GRANATE|BOMB|SHOTSHEL|GUN|GUNS|PISTOL|PISTOLS).*"
+      )
+  then
+    RISICO.maakScore(
+      "VAR011", 
+      RISICO.LAAG, 
+      "Bij aantreffen zending stoppen...", 
+      "01-01-2016", 
+      "31-12-2020"
+      );
+end

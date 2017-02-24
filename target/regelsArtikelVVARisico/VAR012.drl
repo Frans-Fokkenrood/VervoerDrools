@@ -1,0 +1,29 @@
+package com.fokkenrood.ArtikelVVARisico
+
+import com.fokkenrood.drools.Aangifte;
+import com.fokkenrood.drools.Artikel;
+import com.fokkenrood.drools.Partij;
+import com.fokkenrood.drools.ContraInformatieLezer;
+import com.fokkenrood.drools.RISICO;
+
+global ContraInformatieLezer lezer;
+
+rule "VAR012"
+  when
+    $aangifte : Aangifte(
+      eventID == 13,
+      landVanBestemming matches ".*(EG).*"
+      )
+    $artikel : Artikel(
+      lezer.zoekProfiel("VAR012", goederenCode) != null ||
+      goederenBeschrijving matches ".*(AMATOL|NITROCELLULOSE|NITROGLYCOL|PENTA-BLAH|ENZ).*"
+      )
+  then
+    RISICO.maakScore(
+      "VAR012", 
+      RISICO.LAAG, 
+      "Vanuit het BuZa en Douane Landelijk kantoor is...", 
+      "01-01-2000", 
+      "31-12-9999"
+      );
+end
