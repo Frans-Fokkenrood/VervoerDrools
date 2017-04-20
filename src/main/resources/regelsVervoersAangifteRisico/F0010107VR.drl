@@ -12,7 +12,7 @@ rule "F0010107VR"
   when
     $aangifte : Aangifte(
       eventID == 13,
-      verzender.naam matches ".*(SHENZHEN JINMAIFU|WENZHOU JINDAZHOU INTERNATIONAL).*"
+      verzender.naam matches ".*(SHZN JNMF|WZH JDZH INT).*"
       )
   then
     RISICO.maakScore(
